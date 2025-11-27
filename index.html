@@ -4,16 +4,12 @@
   <meta charset="utf-8">
   <title>SRS Molecular Visualization</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/chemdoodle@9.4.0/build/ChemDoodleWeb.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chemdoodle@9.4.0/build/ChemDoodleWeb.css">
+  <!-- ChemDoodle Web Components 正しいCDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chem-doodle-webcomponents@9.4.0/build/ChemDoodleWeb.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chem-doodle-webcomponents@9.4.0/build/ChemDoodleWeb.css" />
 
   <style>
-    body {
-      background: #0a0a0a;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+    body { background: #0a0a0a; color: #fff; font-family: Arial, sans-serif; text-align: center; }
     #viewer {
       width: 900px;
       height: 600px;
@@ -33,28 +29,20 @@
 
   <script>
     const canvas = new ChemDoodle.TransformCanvas3D('viewer', 900, 600);
-
     const molecule = new ChemDoodle.structures.Molecule();
 
-    // ------------------------------
-    // SRS の原子モデル（色・種類）
-    // ------------------------------
     const nodes = {
       global: { label: 'C', x: 0, y: 0, z: 0 },
-
       planner: { label: 'H', x: 2, y: 1, z: 0 },
       coder: { label: 'H', x: -2, y: 1, z: 0 },
       critic: { label: 'H', x: 2, y: -1, z: 0 },
       reviewer: { label: 'H', x: -2, y: -1, z: 0 },
-
       orchestrator: { label: 'O', x: 0, y: 2, z: 1 },
       research: { label: 'N', x: 0, y: -2, z: 1 },
-
       governance: { label: 'Cl', x: 3, y: 0, z: 2 },
       assurance: { label: 'Br', x: -3, y: 0, z: 2 },
       integration: { label: 'F', x: 0, y: 3, z: -1 },
       datareq: { label: 'Si', x: 0, y: -3, z: -1 },
-
       casestudy: { label: 'P', x: 3, y: 3, z: 0 }
     };
 
@@ -62,41 +50,21 @@
       molecule.atoms.push(new ChemDoodle.structures.Atom(n.label, n.x, n.y, n.z));
     });
 
-    // ------------------------------
-    // 結合（SRS の参照リンク）
-    // ------------------------------
     function connect(a, b) {
-      molecule.bonds.push(
-        new ChemDoodle.structures.Bond(
-          molecule.atoms[a],
-          molecule.atoms[b],
-          1
-        )
-      );
+      molecule.bonds.push(new ChemDoodle.structures.Bond(
+        molecule.atoms[a], molecule.atoms[b], 1
+      ));
     }
 
-    // 全 Local SRS → Global SRS
-    connect(0, 1);
-    connect(0, 2);
-    connect(0, 3);
-    connect(0, 4);
-    connect(0, 5);
-    connect(0, 6);
-    connect(0, 7);
-    connect(0, 8);
-    connect(0, 9);
-    connect(0, 10);
-    connect(0, 11);
+    connect(0, 1); connect(0, 2); connect(0, 3); connect(0, 4);
+    connect(0, 5); connect(0, 6); connect(0, 7); connect(0, 8);
+    connect(0, 9); connect(0, 10); connect(0, 11);
 
     canvas.loadMolecule(molecule);
     canvas.specs.projectionPerspective_3D = true;
     canvas.specs.atoms_displayLabels_3D = true;
     canvas.specs.bonds_splitColor = true;
-
     canvas.repaint();
   </script>
 </body>
 </html>
-
-
-
